@@ -82,12 +82,6 @@ public class BleDeviceListAdapter extends BaseAdapter {
                     .findViewById(R.id.tv_devicelist_name);
             viewholder.deviceAddress = (TextView) view
                     .findViewById(R.id.tv_devicelist_address);
-            viewholder.deviceRSSI = (TextView) view
-                    .findViewById(R.id.tv_devicelist_rssi);
-            viewholder.devicerecord = (TextView) view
-                    .findViewById(R.id.tv_devicelist_scanRecord);
-            viewholder.devicerecord_name = (TextView) view
-                    .findViewById(R.id.tv_devicelist_scanRecord_name);
             view.setTag(viewholder);
         } else {
             viewholder = (ViewHolder) view.getTag();
@@ -99,21 +93,12 @@ public class BleDeviceListAdapter extends BaseAdapter {
             viewholder.devicename.setText("Unknow Device");
         viewholder.deviceAddress.setText(mInflater.getContext().getResources().getString(R.string.address)
                 + mLeDevices.get(position).getAddress());
-        viewholder.deviceRSSI.setText(mInflater.getContext().getResources().getString(R.string.rssi) + RSSIs.get(position).toString());
-        viewholder.devicerecord.setText(mInflater.getContext().getResources().getString(R.string.broadcast_packet) + "\n"
-                +":"+ scanRecords.get(position));
-        viewholder.devicerecord_name.setText(
-                mInflater.getContext().getResources().getString(R.string.broadcast_racket_name)
-                + ":"+Utils.ParseScanRecord(scanRecords.get(position)));
         return view;
     }
 
     static class ViewHolder {
         TextView devicename;
         TextView deviceAddress;
-        TextView deviceRSSI;
-        TextView devicerecord;
-        TextView devicerecord_name;
     }
 
     public void clear() {

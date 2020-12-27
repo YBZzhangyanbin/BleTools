@@ -25,8 +25,10 @@ import com.keywish.blutooth.test.DeviceConnect;
 import com.keywish.blutooth.utils.DateUtil;
 import com.keywish.blutooth.utils.Utils;
 
+import javax.security.auth.login.LoginException;
+
 public class BleService extends Service {
-    private final static String TAG = "BleService";
+    private final static String TAG = "zhangyb";
 
     public BluetoothManager mBluetoothManager;
     public BluetoothAdapter mBluetoothAdapter;
@@ -187,11 +189,16 @@ public class BleService extends Service {
         final Intent intent = new Intent();
         intent.setAction(action);
         final byte[] data = characteristic.getValue();
+        Log.i(TAG, "broadcastUpdate: "+data.toString());
+        for (byte b:data
+             ) {
+            Log.i(TAG, "broadcastUpdate: "+b);
+        }
         final String stringData = characteristic.getStringValue(0);
         if (data != null && data.length > 0) {
             final StringBuilder stringBuilder = new StringBuilder(data.length);
             for (byte byteChar : data) {
-                stringBuilder.append(String.format("%X", byteChar));
+                stringBuilder.append(String.format("%02X", byteChar));
             }
             if (stringData != null) {
                 intent.putExtra(EXTRA_STRING_DATA, stringData);

@@ -274,14 +274,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, getText(R.string.set_connect_disconnection), Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.menu_about:
-                MainActivity.this.startActivity(new Intent(this,
-                        AboutActivity.class));
-                break;
-            case R.id.menu_qrcode:
-                MainActivity.this.startActivity(new Intent(this,
-                        QrcodeActivity.class));
-                break;
             default:
                 break;
         }

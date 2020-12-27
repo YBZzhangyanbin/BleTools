@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BLE测试工具</string>
+    <string name="app_name">组件连接</string>
     <string name="title_activity_device_connect">DeviceConnect</string>
     <string name="title_activity_characterisitic">CharacterisiticActivity</string>
     <string name="title_activity_about">AboutActivity</string>

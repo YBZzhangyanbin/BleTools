@@ -43,14 +43,9 @@
             android:label="@string/title_activity_characterisitic"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".AboutActivity"
-            android:label="@string/title_activity_about"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".ChangeCharActivity"
             android:label="@string/title_activity_change_char"
             android:theme="@style/AppTheme" />
-        <activity android:name=".QrcodeActivity" />
 
         <service
             android:name="com.keywish.blutooth.service.BleService"

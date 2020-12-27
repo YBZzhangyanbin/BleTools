@@ -3,6 +3,7 @@ package com.keywish.blutooth.test;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Locale;
 import java.util.UUID;
 
 import android.annotation.SuppressLint;
@@ -22,9 +23,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -80,6 +84,7 @@ public class ChangeCharActivity extends AppCompatActivity implements OnClickList
     boolean startNotify;
     boolean isNotifyHex;
     boolean isHex;
+    private TextToSpeech textToSpeech;
 
     private ServiceConnection conn = new ServiceConnection() {
         @SuppressLint("NewApi")
@@ -163,6 +168,7 @@ public class ChangeCharActivity extends AppCompatActivity implements OnClickList
                     result = intent.getExtras().getString(
                             BleService.EXTRA_STRING_DATA);
                 }
+                Log.i(TAG, "onReceive: "+result);
                 int countNumber = intent.getExtras().getInt(
                         BleService.EXTRA_DATA_LENGTH);
                 if (resultLengthNum != 0) {
@@ -171,7 +177,7 @@ public class ChangeCharActivity extends AppCompatActivity implements OnClickList
                     resultLengthNum = countNumber;
                 }
                 if (text_string != null) {
-                    text_string = text_string + result;
+                    text_string = result;
                 } else {
                     text_string = result;
                 }
@@ -181,7 +187,9 @@ public class ChangeCharActivity extends AppCompatActivity implements OnClickList
                     public void run() {
                         // TODO Auto-generated method stub
                         notify_resualt.setText(text_string);
+                        textToSpeech.speak(text_string, TextToSpeech.QUEUE_FLUSH, null,getString(R.string.app_name));
                         resultcount.setText(getText(R.string.result_count) + resultLength);
+
                     }
                 });
             }
@@ -194,6 +202,7 @@ public class ChangeCharActivity extends AppCompatActivity implements OnClickList
             }
         }
     };
+    private String TAG="zhangyb";
 
     private IntentFilter makeIntentFilter() {
         // TODO Auto-generated method stub
@@ -220,6 +229,39 @@ public class ChangeCharActivity extends AppCompatActivity implements OnClickList
         init();
         bindService(new Intent(this, BleService.class), conn, BIND_AUTO_CREATE);
         registerReceiver(mBroadcastReceiver, makeIntentFilter());
+        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = textToSpeech.setLanguage(Locale.ENGLISH);
+                    if (result != TextToSpeech.LANG_COUNTRY_AVAILABLE && result != TextToSpeech.LANG_AVAILABLE) {
+                        Toast.makeText(ChangeCharActivity.this, "TTS不支持中文", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
+            }
+        }
+        );
+        textToSpeech.setSpeechRate(1.0f);
+        textToSpeech.setPitch(1.5f);
+        textToSpeech.setLanguage(Locale.ENGLISH);
+        textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+            @Override
+            public void onStart(String utteranceId) {
+                Log.i(TAG, "onStart: ");
+            }
+
+            @Override
+            public void onDone(String utteranceId) {
+                Log.i(TAG, "onDone: ");
+            }
+
+            @Override
+            public void onError(String utteranceId) {
+                Log.i(TAG, "onError: ");
+            }
+        });
     }
 
     private void init() {
@@ -699,8 +741,10 @@ public class ChangeCharActivity extends AppCompatActivity implements OnClickList
     }
 
     public static String hexStr2Str(String hexStr) {
+        Log.i("zhangyb", "hexStr2Str: "+hexStr);
         String str = "0123456789ABCDEF";
         char[] hexs = hexStr.toCharArray();
+        Log.i("zhangyb", "hexStr2Str: "+hexs);
         byte[] bytes = new byte[hexStr.length() / 2];
         int n;
         for (int i = 0; i < bytes.length; i++) {
