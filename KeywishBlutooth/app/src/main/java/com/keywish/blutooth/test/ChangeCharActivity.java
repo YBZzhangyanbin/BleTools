@@ -233,7 +233,8 @@ public class ChangeCharActivity extends AppCompatActivity implements OnClickList
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
-                    int result = textToSpeech.setLanguage(Locale.ENGLISH);
+//                    int result = textToSpeech.setLanguage(Locale.ENGLISH);
+                    int result = textToSpeech.setLanguage(Locale.CHINA);
                     if (result != TextToSpeech.LANG_COUNTRY_AVAILABLE && result != TextToSpeech.LANG_AVAILABLE) {
                         Toast.makeText(ChangeCharActivity.this, "TTS不支持中文", Toast.LENGTH_SHORT).show();
                     }
@@ -245,7 +246,7 @@ public class ChangeCharActivity extends AppCompatActivity implements OnClickList
         );
         textToSpeech.setSpeechRate(1.0f);
         textToSpeech.setPitch(1.5f);
-        textToSpeech.setLanguage(Locale.ENGLISH);
+        textToSpeech.setLanguage(Locale.CHINA);
         textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
             @Override
             public void onStart(String utteranceId) {
@@ -350,7 +351,7 @@ public class ChangeCharActivity extends AppCompatActivity implements OnClickList
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                saveResualt(notify_resualt.getText().toString());
+                saveResualt(notify_string_result.getText().toString());
             }
         });
     }
@@ -741,10 +742,8 @@ public class ChangeCharActivity extends AppCompatActivity implements OnClickList
     }
 
     public static String hexStr2Str(String hexStr) {
-        Log.i("zhangyb", "hexStr2Str: "+hexStr);
         String str = "0123456789ABCDEF";
         char[] hexs = hexStr.toCharArray();
-        Log.i("zhangyb", "hexStr2Str: "+hexs);
         byte[] bytes = new byte[hexStr.length() / 2];
         int n;
         for (int i = 0; i < bytes.length; i++) {
