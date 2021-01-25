@@ -351,7 +351,7 @@ public class ChangeCharActivity extends AppCompatActivity implements OnClickList
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                saveResualt(notify_string_result.getText().toString());
+                saveResualt(notify_resualt.getText().toString());
             }
         });
     }
