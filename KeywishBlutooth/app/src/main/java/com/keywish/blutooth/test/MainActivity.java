@@ -21,12 +21,7 @@ import android.net.wifi.ScanResult;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
-import android.support.v7.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -38,6 +33,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.keywish.blutooth.adapter.BleDeviceListAdapter;
 import com.keywish.blutooth.utils.Utils;
@@ -167,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setEmptyView(findViewById(R.id.pb_empty));
         swagLayout = (SwipeRefreshLayout) findViewById(R.id.swagLayout);
         swagLayout.setVisibility(View.VISIBLE);
-        swagLayout.setOnRefreshListener(new OnRefreshListener() {
+        swagLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @SuppressWarnings("deprecation")
             @SuppressLint("NewApi")

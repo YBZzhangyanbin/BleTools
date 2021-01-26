@@ -13,8 +13,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +20,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.keywish.blutooth.adapter.BleSevicesListAdapter;
 import com.keywish.blutooth.service.BleService;
@@ -156,7 +156,7 @@ public class DeviceConnect extends AppCompatActivity {
         serviceList.setEmptyView(findViewById(R.id.pb_empty));
         servicesListAdapter = new BleSevicesListAdapter(this);
         swagLayout = (SwipeRefreshLayout) findViewById(R.id.swagLayout);
-        swagLayout.setOnRefreshListener(new OnRefreshListener() {
+        swagLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @SuppressLint("NewApi")
             @Override
